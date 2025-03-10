@@ -1,4 +1,4 @@
-package user
+package models
 
 import (
 	"time"
@@ -8,12 +8,11 @@ import (
 
 type User struct {
 	gorm.Model
-	Username  string    `json:"username"`
-	Email     string    `json:"email" gorm:"unique"`
-	Password  string    `json:"password"`
-	Balance   float64   `json:"balance"`
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	Username string  `json:"username"`
+	Email    string  `json:"email" gorm:"unique"`
+	Password string  `json:"password"`
+	Balance  float64 `json:"balance"`
+	Role     string  `json:"role" gorm:"default:'user'"`
 }
 
 type CreateUserRequest struct {
@@ -36,10 +35,12 @@ type UserResponse struct {
 	Balance   float64   `json:"balance"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+	DeletedAt time.Time `json:"deleted_at"`
+	Role      string    `json:"role"`
 }
 
 type DeleteUserRequest struct {
-	ID int `json:"id"`
+	ID string `json:"id"`
 }
 
 type ErrorResponse struct {

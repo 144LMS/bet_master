@@ -1,4 +1,4 @@
-package bet
+package models
 
 import "gorm.io/gorm"
 
