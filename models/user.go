@@ -10,9 +10,10 @@ type User struct {
 	gorm.Model
 	Username string  `json:"username"`
 	Email    string  `json:"email" gorm:"unique"`
-	Password string  `json:"password"`
+	Password string  `json:"-" gorm:"not null"`
 	Balance  float64 `json:"balance"`
 	Role     string  `json:"role" gorm:"default:'user'"`
+	IsBanned bool    `json:"is_banned" gorm:"default:false"`
 }
 
 type CreateUserRequest struct {
@@ -39,9 +40,9 @@ type UserResponse struct {
 	Role      string    `json:"role"`
 }
 
-type DeleteUserRequest struct {
-	ID string `json:"id"`
-}
+//type DeleteUserRequest struct {
+//	ID string `json:"id"`
+//}
 
 type ErrorResponse struct {
 	Message string `json:"message"`

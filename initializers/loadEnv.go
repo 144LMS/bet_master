@@ -7,7 +7,7 @@ import (
 )
 
 func LoadEnv() {
-	err := godotenv.Load("D:/projects/bet_master/.env")
+	err := godotenv.Load("D:/vsCode/bet_master/.env")
 	if err != nil {
 		log.Fatalf("Error loading .env file: %v", err)
 	}

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/144LMS/bet_master.git/initializers"
-	"github.com/144LMS/bet_master.git/models"
+	"github.com/144LMS/bet_master/initializers"
+	"github.com/144LMS/bet_master/models"
 )
 
 func init() {
