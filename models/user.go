@@ -8,12 +8,12 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string  `json:"username"`
-	Email    string  `json:"email" gorm:"unique"`
-	Password string  `json:"-" gorm:"not null"`
-	Balance  float64 `json:"balance"`
-	Role     string  `json:"role" gorm:"default:'user'"`
-	IsBanned bool    `json:"is_banned" gorm:"default:false"`
+	Username string `json:"username" gorm:"not null"`
+	Email    string `json:"email" gorm:"unique;not null"`
+	Password string `json:"-" gorm:"not null"`
+	Role     string `json:"role" gorm:"default:'user'"`
+	IsBanned bool   `json:"is_banned" gorm:"default:false"`
+	Wallet   Wallet `json:"wallet" gorm:"foreignKey:UserID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
 }
 
 type CreateUserRequest struct {

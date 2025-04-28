@@ -1,27 +1,26 @@
 package models
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+type BetStatus string
+
+const (
+	BetPending BetStatus = "pending"
+	BetWon     BetStatus = "won"
+	BetLost    BetStatus = "lost"
+)
 
 type Bet struct {
 	gorm.Model
-	FirstTeam  string  `json:"first_team"`
-	SecondTeam string  `json:"second_team"`
-	Winner     string  `json:"winner"`
-	Total      float64 `json:"total"`
-}
-
-type UpdateBetRequest struct {
-	IDBet      int     `json:"id_bet"`
-	FirstTeam  string  `json:"first_team"`
-	SecondTeam string  `json:"second_team"`
-	Total      float64 `json:"total"`
-}
-
-type WinnerBetRequest struct {
-	IDBet  int    `json:"id_bet"`
-	Winner string `json:"winner"`
-}
-
-type DeleteBetRequest struct {
-	IDBet int `json:"id_bet"`
+	UserID       uint      `gorm:"not null"`
+	Amount       float64   `gorm:"not null"`
+	Odds         float64   `gorm:"not null"` // Коэффициент (например, 1.95)
+	PotentialWin float64   `gorm:"not null"` // amount * odds
+	Status       BetStatus `gorm:"default:'pending'"`
+	CreatedAt    time.Time `gorm:"autoCreateTime"`
+	SettledAt    *time.Time
 }

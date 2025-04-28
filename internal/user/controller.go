@@ -32,6 +32,31 @@ func (c *Controller) GetUserController(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, user)
 }
 
+func (c *Controller) GetUserWithWalletController(ctx *gin.Context) {
+	userID := ctx.Param("id")
+
+	user, wallet, err := c.userService.getUserWithWalletService(userID)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
+	}
+
+	responce := gin.H{
+		"user": gin.H{
+			"id":       user.ID,
+			"username": user.Username,
+			"email":    user.Email,
+		},
+		"wallet": gin.H{
+			"id":      wallet.ID,
+			"balance": wallet.Balance,
+		},
+	}
+
+	ctx.JSON(http.StatusOK, responce)
+}
+
 func (c *Controller) Registration(ctx *gin.Context) {
 	var user models.User
 
@@ -40,13 +65,25 @@ func (c *Controller) Registration(ctx *gin.Context) {
 		return
 	}
 
-	err := c.userService.CreateUserService(&user)
+	createdUser, createdWallet, err := c.userService.CreateUserWithWalletService(&user)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	responce := gin.H{
+		"user": gin.H{
+			"id":       createdUser.ID,
+			"username": createdUser.Username,
+			"email":    createdUser.Email,
+		},
+		"wallet": gin.H{
+			"id":      createdWallet.ID,
+			"balance": createdWallet.Balance,
+		},
+	}
+
+	ctx.JSON(http.StatusOK, responce)
 
 }
 

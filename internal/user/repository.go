@@ -1,13 +1,11 @@
 package user
 
 import (
+	"fmt"
+
 	"github.com/144LMS/bet_master/models"
 	"gorm.io/gorm"
 )
-
-/*
-Слой взаимодействия с DB
-*/
 
 type UserRepository struct {
 	db *gorm.DB
@@ -24,8 +22,30 @@ func (repo *UserRepository) GetUserRepository(id string) (*models.User, error) {
 	return &user, err
 }
 
-func (repo *UserRepository) CreateUserRepository(user *models.User) error {
-	return repo.db.Create(user).Error
+func (repo *UserRepository) GetUserWithWalletRepository(id string) (*models.User, error) {
+	var user models.User
+
+	if err := repo.db.Preload("Wallet").First(&user, id); err != nil {
+		return nil, fmt.Errorf("user with wallet not found: %v", err)
+	}
+
+	return &user, nil
+}
+
+func (repo *UserRepository) CreateUserRepository(tx *gorm.DB, user *models.User) error {
+	return tx.Create(user).Error
+}
+
+func (repo *UserRepository) CreateWalletRepository(tx *gorm.DB, userID uint) (*models.Wallet, error) {
+	wallet := models.Wallet{
+		UserID:  userID,
+		Balance: 0,
+	}
+
+	if err := tx.Create(&wallet).Error; err != nil {
+		return nil, err
+	}
+	return &wallet, nil
 }
 
 func (repo *UserRepository) UpdateUserRepository(user *models.User) error {
