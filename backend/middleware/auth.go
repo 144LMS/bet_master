@@ -10,31 +10,40 @@ import (
 
 func AuthMiddleware(authService *auth.AuthService) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
+		// Пробуем получить токен из кук сначала
+		tokenString, err := ctx.Cookie("access_token")
+		if err != nil {
+			// Если нет в куках, пробуем из заголовка Authorization
+			authHeader := ctx.GetHeader("Authorization")
+			if authHeader == "" {
+				ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+					"error": "Требуется авторизация: отсутствует токен в куках или заголовке Authorization",
+				})
+				return
+			}
 
-		authHeader := ctx.GetHeader("Authorization")
-		if authHeader == "" {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Authorization header required"})
-			return
-		}
+			parts := strings.Split(authHeader, " ")
+			if len(parts) != 2 || parts[0] != "Bearer" {
+				ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+					"error": "Неверный формат заголовка Authorization",
+				})
+				return
+			}
 
-		parts := strings.Split(authHeader, " ")
-		if len(parts) != 2 || parts[0] != "Bearer" {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Invalid Authorization header format"})
-			return
-		}
-
-		tokenString := parts[1]
-		if tokenString == "" {
-			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Token not provided"})
-			return
+			tokenString = parts[1]
+			if tokenString == "" {
+				ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+					"error": "Токен не предоставлен",
+				})
+				return
+			}
 		}
 
 		userID, userRole, err := authService.ValidateTokens(tokenString)
 		if err != nil {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"error":   "Invalid token",
+				"error":   "Неверный токен",
 				"details": err.Error(),
-				"hint":    "Token might be expired or malformed",
 			})
 			return
 		}

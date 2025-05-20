@@ -1,6 +1,7 @@
 package user
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/144LMS/bet_master/internal/auth"
@@ -21,16 +22,25 @@ func NewUserController(userService *UserService, authService *auth.AuthService) 
 }
 
 func (c *Controller) GetUserController(ctx *gin.Context) {
-	userID := ctx.Param("id")
-
-	user, err := c.userService.getUserService(userID)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"error": err.Error(),
-		})
+	userID, exists := ctx.Get("userID")
+	if !exists {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
+		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	user, err := c.userService.repo.GetUserRepository(fmt.Sprintf("%v", userID))
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"user": gin.H{
+			"id":       user.ID,
+			"username": user.Username,
+			"email":    user.Email,
+		},
+	})
 }
 
 func (c *Controller) GetUserWithWalletController(ctx *gin.Context) {
@@ -105,7 +115,7 @@ func (c *Controller) Registration(ctx *gin.Context) {
 		accessToken,
 		3600,
 		"/",
-		"localhost",
+		"",
 		false,
 		true,
 	)
@@ -115,14 +125,14 @@ func (c *Controller) Registration(ctx *gin.Context) {
 		refreshToken,
 		86400,
 		"/",
-		"localhost",
+		"",
 		false,
 		true,
 	)
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"access_token":  accessToken,
-		"refresh_token": refreshToken,
+		//"access_token":  accessToken,
+		//"refresh_token": refreshToken,
 		"user": gin.H{
 			"id":       createdUser.ID,
 			"username": createdUser.Username,
@@ -189,7 +199,7 @@ func (c *Controller) Login(ctx *gin.Context) {
 		accessToken,
 		3600,
 		"/",
-		"localhost",
+		"",
 		false,
 		true,
 	)
@@ -199,14 +209,14 @@ func (c *Controller) Login(ctx *gin.Context) {
 		refreshToken,
 		86400,
 		"/",
-		"localhost",
+		"",
 		false,
 		true,
 	)
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"access_token":  accessToken,
-		"refresh_token": refreshToken,
-		"user_id":       user.ID,
+		//"access_token":  accessToken,
+		//"refresh_token": refreshToken,
+		"user_id": user.ID,
 	})
 }

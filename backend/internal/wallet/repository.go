@@ -2,7 +2,7 @@ package wallet
 
 import (
 	"errors"
-	"fmt"
+	//"fmt"
 
 	"github.com/144LMS/bet_master/models"
 	"gorm.io/gorm"
@@ -18,8 +18,10 @@ func NewWalletRepository(db *gorm.DB) *WalletRepository {
 
 func (r *WalletRepository) GetWallet(userID uint) (*models.Wallet, error) {
 	var wallet models.Wallet
-	if err := r.db.Where("user_id = ?", userID).First(&wallet).Error; err != nil {
-		return nil, fmt.Errorf("user wallet not found %v", err)
+	if err := r.db.Preload("Transactions", func(db *gorm.DB) *gorm.DB {
+		return db.Order("created_at DESC")
+	}).First(&wallet, "user_id = ?", userID).Error; err != nil {
+		return nil, err
 	}
 	return &wallet, nil
 }

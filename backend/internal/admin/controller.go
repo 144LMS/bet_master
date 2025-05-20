@@ -60,6 +60,16 @@ func (c *AdminController) AdminLogin(ctx *gin.Context) {
 		return
 	}
 
+	ctx.SetCookie(
+		"access_token",
+		tokenString,
+		3600*24, // срок действия: 1 день
+		"/",
+		"",    // domain
+		false, // secure (поставь true если https)
+		true,  // httpOnly
+	)
+
 	ctx.JSON(http.StatusOK, gin.H{
 		"message": "Login successful",
 		"token":   tokenString,

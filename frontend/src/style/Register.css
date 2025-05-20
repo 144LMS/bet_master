@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
+
+.register-bg-strict {
+  min-height: 100vh;
+  width: 100vw;
+  background: #181d27;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.register-card {
+  background: #232a36;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px 0 rgba(0,0,0,0.3);
+  padding: 48px 32px 32px 32px;
+  min-width: 340px;
+  max-width: 380px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+}
+
+.register-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.bet-brand {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #fafafa;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+.bet-accent {
+  color: #36c43b;
+  letter-spacing: 0.02em;
+}
+
+.register-title-strict {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.register-subtitle {
+  color: #b0b4bb;
+  font-size: 1rem;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.AuthForm {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.AuthForm input[type="email"],
+.AuthForm input[type="password"],
+.AuthForm input[type="text"] {
+  background: #181d27;
+  color: #fff;
+  border: 1.5px solid #343a48;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  transition: border .2s;
+}
+.AuthForm input[type="email"]:focus,
+.AuthForm input[type="password"]:focus,
+.AuthForm input[type="text"]:focus {
+  outline: none;
+  border: 1.5px solid #36c43b;
+  background: #202634;
+}
+
+.AuthForm button[type="submit"] {
+  margin-top: 10px;
+  background: linear-gradient(90deg, #36c43b 0%, #249c27 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 8px;
+  padding: 13px 0;
+  transition: background 0.25s, transform 0.1s;
+  cursor: pointer;
+  box-shadow: 0 2px 10px 0 rgba(54,196,59,0.08);
+}
+.AuthForm button[type="submit"]:hover {
+  background: linear-gradient(90deg, #249c27 0%, #36c43b 100%);
+  transform: translateY(-2px) scale(1.03);
+}
+
+.AuthForm .form-error {
+  color: #ff4d4f;
+  margin-top: 2px;
+  font-size: 0.93rem;
+  text-align: left;
+}
+
+@media (max-width: 600px) {
+  .register-card {
+    min-width: 90vw;
+    max-width: 95vw;
+    padding: 24px 6vw 18px 6vw;
+  }
+  .bet-brand {
+    font-size: 1.3rem;
+  }
+  .register-title-strict {
+    font-size: 1.1rem;
+  }
+}

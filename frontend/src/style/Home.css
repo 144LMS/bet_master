@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;900&display=swap');
+
+.home-bg-strict {
+  min-height: 100vh;
+  width: 100vw;
+  background: #181d27;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', Arial, sans-serif;
+  position: relative;
+}
+
+.home-main-card {
+  background: #232a36;
+  border-radius: 22px;
+  box-shadow: 0 6px 28px 0 rgba(0,0,0,0.32);
+  padding: 54px 44px 36px 44px;
+  min-width: 340px;
+  max-width: 400px;
+  width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  margin-top: 48px;
+  margin-bottom: 30px;
+}
+
+.home-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 26px;
+}
+
+.bet-brand {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #fafafa;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.bet-accent {
+  color: #36c43b;
+  letter-spacing: 0.03em;
+}
+
+.home-title-strict {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 9px;
+  margin-top: 0;
+}
+
+.home-subtitle {
+  color: #b0b4bb;
+  font-size: 1.05rem;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.home-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 34px;
+  margin-top: 10px;
+}
+
+.home-btn {
+  width: 100%;
+  border: none;
+  font-size: 1.06rem;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 13px 0;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-bottom: 0;
+  outline: none;
+}
+
+.login-btn {
+  background: linear-gradient(90deg, #36c43b 0%, #249c27 100%);
+  color: #fff;
+  box-shadow: 0 2px 8px 0 rgba(54,196,59,0.10);
+}
+.login-btn:hover {
+  background: linear-gradient(90deg, #249c27 0%, #36c43b 100%);
+}
+
+.register-btn {
+  background: #fff;
+  color: #232a36;
+  border: 1.5px solid #36c43b;
+}
+.register-btn:hover {
+  background: #e5fbe6;
+  color: #249c27;
+}
+
+.admin-btn {
+  background: #232a36;
+  border: 1.5px solid #b0b4bb;
+  color: #b0b4bb;
+}
+.admin-btn:hover {
+  background: #181d27;
+  color: #36c43b;
+  border-color: #36c43b;
+}
+
+.home-features {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  gap: 10px;
+}
+.feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #181d27;
+  border-radius: 12px;
+  padding: 17px 13px 9px 13px;
+  min-width: 90px;
+  box-shadow: 0 1px 6px 0 rgba(54,196,59,0.08);
+}
+.feature-icon {
+  font-size: 2.1rem;
+  margin-bottom: 6px;
+}
+
+.feature p {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+.home-footer-strict {
+  margin-top: 10px;
+  text-align: center;
+  color: #b0b4bb;
+  font-size: 0.98rem;
+  width: 100vw;
+  letter-spacing: 0.01em;
+  font-family: 'Montserrat', Arial, sans-serif;
+}
+
+@media (max-width: 600px) {
+  .home-main-card {
+    min-width: 96vw;
+    max-width: 99vw;
+    padding: 28px 4vw 18px 4vw;
+  }
+  .bet-brand {
+    font-size: 1.25rem;
+  }
+  .home-title-strict {
+    font-size: 1rem;
+  }
+  .home-features {
+    gap: 3px;
+    flex-direction: column;
+  }
+  .feature {
+    min-width: 0;
+    margin-bottom: 7px;
+    padding: 14px 6px 7px 6px;
+  }
+}
